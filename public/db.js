@@ -36,7 +36,7 @@ function saveRecord(record) {
 
 //called when user goes online to send transactions stored in db to server
 function checkDatatbase() {
-    const transaction = db.transaction("pending", "readwrite");
+    const transaction = db.transaction(["pending"], "readwrite");
     const store = transaction.objectStrore("pending");
     const getAll = store.getAll();
 
