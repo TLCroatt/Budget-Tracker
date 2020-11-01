@@ -28,8 +28,8 @@ request.onerror = function (event) {
 
 //saves transaction while user is offline
 function saveRecord(record) {
-    const transaction = db.transaction("pending", "readwrite");
-    const store = transaction.objectStrore("pending");
+    const transaction = db.transaction(["pending"], "readwrite");
+    const store = transaction.objectStore("pending");
 
     store.add(record);
 };
@@ -37,7 +37,7 @@ function saveRecord(record) {
 //called when user goes online to send transactions stored in db to server
 function checkDatatbase() {
     const transaction = db.transaction(["pending"], "readwrite");
-    const store = transaction.objectStrore("pending");
+    const store = transaction.objectStore("pending");
     const getAll = store.getAll();
 
     getAll.onsuccess = function () {
@@ -54,7 +54,7 @@ function checkDatatbase() {
             .then(() => {
                 //delete records if successful
                 const transaction = db.transaction(["pending"], "readwrite");
-                const store = transaction.objectStrore("pending");
+                const store = transaction.objectStore("pending");
                 store.clear();
             });
         }
@@ -63,7 +63,7 @@ function checkDatatbase() {
 
 function deletePending() {
     const transaction = db.transaction(["pending"], "readwrite");
-    const store = transaction.objectStrore("pending");
+    const store = transaction.objectStore("pending");
     store.clear();
 }
 
