@@ -1,5 +1,5 @@
 const FILES_TO_CACHE = [
-    "/", "/index.html", "/index.js", "/db.js", "/styles.css"];
+    "/", "/index.html", "/js/index.js", "/js/idb.js", "/css/styles.css"];
   
   const CACHE_NAME = "static-cache-v2";
   const DATA_CACHE_NAME = "data-cache-v1";
@@ -35,17 +35,17 @@ const FILES_TO_CACHE = [
   });
   
   // fetch
-  self.addEventListener("fetch", evt => {
+  self.addEventListener("fetch", function(evt) {
     // cache successful requests to the API
     if (evt.request.url.includes("/api/")) {
-        console.log('[Service Worker] Fetch(data)', evt.request.url);
+        console.log('[Service Worker] Fetch(data)', evt.request.url)
       evt.respondWith(
         caches.open(DATA_CACHE_NAME).then(cache => {
           return fetch(evt.request)
             .then(response => {
               // If the response was good, clone it and store it in the cache.
               if (response.status === 200) {
-                cache.put(evt.request, response.clone());
+                cache.put(evt.request.url, response.clone());
               }
   
               return response;
@@ -55,17 +55,32 @@ const FILES_TO_CACHE = [
               return cache.match(evt.request);
             });
         }).catch(err => console.log(err))
-      )
+      );
   
       return;
     }
   
     //if the request is not for the API, serve static assets using "offline-first" approach.
     evt.respondWith(
-      caches.open(CACHE_NAME).then( cache => {
-        return cache.match(evt.request).then(response => {
-            return response || fetch(evt.request);
-            })
+      caches.open(CACHE_NAME).then( cache =>
+        cache.match(evt.request).then(function(response) {
+          return response || fetch(evt.request);
         })
+        )
+      
     );
   });
+
+// evt.respondWith(
+//     fetch(evt.request).catch(function() {
+//       return caches.match(evt.request).then(function(response) {
+//         if (response) {
+//           return response;
+//         } else if (evt.request.headers.get("accept").includes("text/html")) {
+//           // return the cached home page for all requests for html pages
+//           return caches.match("/");
+//         }
+//       });
+//     })
+//   );
+// });
