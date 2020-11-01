@@ -1,3 +1,10 @@
+const indexedDB =
+  window.indexedDB ||
+  window.mozIndexedDB ||
+  window.webkitIndexedDB ||
+  window.msIndexedDB ||
+  window.shimIndexedDB;
+
 let db;
 const request = indexedDB.open("budget", 1);
 
@@ -19,15 +26,17 @@ request.onerror = function (event) {
     console.log("Whoops!" + event.target.errorCode);
 };
 
-function saveRecord() {
-    const transaction = db.transaction(["pending"], "readwrite");
+//saves transaction while user is offline
+function saveRecord(record) {
+    const transaction = db.transaction("pending", "readwrite");
     const store = transaction.objectStrore("pending");
 
     store.add(record);
 };
 
+//called when user goes online to send transactions stored in db to server
 function checkDatatbase() {
-    const transaction = db.transaction(["pending"], "readwrite");
+    const transaction = db.transaction("pending", "readwrite");
     const store = transaction.objectStrore("pending");
     const getAll = store.getAll();
 

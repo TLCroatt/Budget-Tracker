@@ -45,7 +45,7 @@ const FILES_TO_CACHE = [
             .then(response => {
               // If the response was good, clone it and store it in the cache.
               if (response.status === 200) {
-                cache.put(evt.request.url, response.clone());
+                cache.put(evt.request, response.clone());
               }
   
               return response;
