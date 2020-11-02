@@ -7,10 +7,10 @@ Keep track of your expenses by adding transactions while online or offline. Offl
 ---
 
 ## Table of Contents
-[Installation](#installation)
-[Usage](#usage)
-[License](#license)
-[Contributing](#contributing)
+[Installation](#installation)\
+[Usage](#usage)\
+[License](#license)\
+[Contributing](#contributing)\
 [Links](#links)
 
 ---
@@ -38,10 +38,10 @@ Express.js\
 Mongoose\
 MongoDB\
 IndexedDB\
-Morgan\
+Morgan
 
 ---
 
 ## Links
-Heroku:
-Github Repo: (https://github.com/TLCroatt/Budget-Tracker)
+Heroku: [https://frozen-taiga-53046.herokuapp.com/](https://frozen-taiga-53046.herokuapp.com/)\
+Github Repo: [https://github.com/TLCroatt/Budget-Tracker](https://github.com/TLCroatt/Budget-Tracker)
